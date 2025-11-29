@@ -1,0 +1,6 @@
+@EquineConnect.Api_HostAddress = http://localhost:5139
+
+GET {{EquineConnect.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
