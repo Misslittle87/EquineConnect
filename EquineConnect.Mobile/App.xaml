@@ -5,10 +5,93 @@
              x:Class="EquineConnect.Mobile.App">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            <!-- Main Colors -->
+            <Color x:Key="Primary">#5856D6</Color>
+            <Color x:Key="TextColor">#000000</Color>
+            <Color x:Key="TextColorDark">White</Color>
+
+            <Color x:Key="WindowBackgroundColor">#f2f2f7</Color>
+            <Color x:Key="WindowBackgroundColorDark">Black</Color>
+
+            <Color x:Key="Transparent">Transparent</Color>
+
+            <Color x:Key="SystemBlue">#007AFF</Color>
+            <Color x:Key="SystemGreen">#34C759</Color>
+            <Color x:Key="SystemIndigo">#5856D6</Color>
+            <Color x:Key="SystemOrange">#FF9500</Color>
+            <Color x:Key="SystemPink">#FF2D55</Color>
+            <Color x:Key="SystemPurple">#AF52DE</Color>
+            <Color x:Key="SystemRed">#FF3B30</Color>
+            <Color x:Key="SystemTeal">#5AC8FA</Color>
+            <Color x:Key="SystemYellow">#FFCC00</Color>
+            <Color x:Key="SystemPeach">#E07272</Color>
+            <Color x:Key="SystemPinkPurple">#911B4E</Color>
+
+            <Color x:Key="FrameBackground">White</Color>
+            <Color x:Key="FrameBackgroundDark">#1C1C1E</Color>
+
+            <Color x:Key="SystemGray">#8E8E93</Color>
+            <Color x:Key="SystemGray2">#AEAEB2</Color>
+            <Color x:Key="SystemGray3">#C7C7CC</Color>
+            <Color x:Key="SystemGray4">#D1D1D6</Color>
+            <Color x:Key="SystemGray5">#E5E5EA</Color>
+            <Color x:Key="SystemGray6">#F2F2F7</Color>
+
+            <Color x:Key="SystemBlueDark">#0A84FF</Color>
+            <Color x:Key="SystemGreenDark">#30D158</Color>
+            <Color x:Key="SystemIndigoDark">#5E5CE6</Color>
+            <Color x:Key="SystemOrangeDark">#FF9F0A</Color>
+            <Color x:Key="SystemPinkDark">#FF375F</Color>
+            <Color x:Key="SystemPurpleDark">#BF5AF2</Color>
+            <Color x:Key="SystemRedDark">#FF453A</Color>
+            <Color x:Key="SystemTealDark">#64D2FF</Color>
+            <Color x:Key="SystemYellowDark">#FFD60A</Color>
+
+            <Color x:Key="SystemGrayDark">#8E8E93</Color>
+            <Color x:Key="SystemGray2Dark">#636366</Color>
+            <Color x:Key="SystemGray3Dark">#484848</Color>
+            <Color x:Key="SystemGray4Dark">#3A3A3C</Color>
+            <Color x:Key="SystemGray5Dark">#2C2C2E</Color>
+            <Color x:Key="SystemGray6Dark">#1C1C1E</Color>
+
+            <!-- Spinner style -->
+            <Style x:Key="BaseRefreshView" TargetType="RefreshView">
+                <Setter Property="RefreshColor"
+                        Value="{StaticResource Primary}"/>
+            </Style>
+
+            <!-- Lable styles -->
+            <Style x:Key="BaseLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+            <!-- Button style -->
+            <Style x:Key="Button" TargetType="Button">
+                <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource FrameBackground}"/>
+                <Setter Property="BorderColor" Value="{StaticResource Primary}"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="BButton" TargetType="Button"
+                   BasedOn="{StaticResource Button}">
+                <Setter Property="BorderWidth" Value="2"/>
+            </Style>
+
+            <!-- Frames style -->
+            <Style x:Key="FrameView" TargetType="Frame">
+                <Setter Property="BorderColor" Value="{StaticResource Primary}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource FrameBackground}"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource FrameBackground}"/>
+            </Style>
+
+            <!-- Stacklayout -->
+            <Style x:Key="Stacklayout" TargetType="StackLayout">
+                <Setter Property="BackgroundColor" Value="{StaticResource Transparent}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
