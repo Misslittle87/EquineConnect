@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:EquineConnect.Mobile.ViewModels"
+             xmlns:model="clr-namespace:EquineConnect.Mobile.Models"
+             x:DataType="viewmodel:LoginViewModel"
+             x:Class="EquineConnect.Mobile.Views.LoginPage"
+             Title="LoginPage">
+    <Grid Padding="50">
+        <Frame BorderColor="{StaticResource Primary}"
+               CornerRadius="40">
+            <Grid RowDefinitions="*,*,*">
+                <Image Source="horse_head_solid.svg" 
+                           HeightRequest="100" 
+                           Margin="30" 
+                           Grid.Row="0"/>
+                <VerticalStackLayout Grid.Row="1">
+                    <Label Text="Email:" Margin="5"/>
+                    <Entry Text="{Binding Email}"/>
+                    <Label Text="Lösenord:" Margin="5"/>
+                    <Entry Text="{Binding Password}" IsPassword="True"/>
+                    <Button Text="Logga in" Command="{Binding LoginCommand}"/>
+                    <Label Text="Registrera">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Glömt lösenord?" Margin="5"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

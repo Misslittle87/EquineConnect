@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="EquineConnect.Mobile.Views.RegistrationPage"
+             xmlns:model="clr-namespace:EquineConnect.Mobile.Models"
+             xmlns:viewmodel="clr-namespace:EquineConnect.Mobile.ViewModels"
+             x:DataType="viewmodel:RegistrationViewModel"
+             Title="RegistrationPage">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label Text="Registrera"/>
+            <Entry Placeholder="Email/Användarnamn"
+               Text="{Binding UserName}">
+               <Entry.Behaviors>
+                    <toolkit:RequiredStringValidationBehavior
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        ValidStyle="{StaticResource ValidEntryStyle}"
+                        Flags="ValidateOnValueChanged"
+                        RequiredString="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Entry Placeholder="Lösenord" IsPassword="True"
+               Text="{Binding Password}"/>
+            <Button Text="Registrera"
+                Command="{Binding AddCommand}"/>
+
+            <CollectionView ItemsSource="{Binding UserInfo}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:User">
+                        <Border>
+                            <Label Text="{Binding Password}"/>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:EquineConnect.Mobile.ViewModels"
+             xmlns:model="clr-namespace:EquineConnect.Mobile.Models"
+             x:DataType="viewModel:MainViewModel"
+             x:Class="EquineConnect.Mobile.Views.MainPage">
+
+    <Grid ColumnDefinitions="*"
+          RowSpacing="10"
+          RowDefinitions="Auto,Auto"
+          Padding="10">
+        <HorizontalStackLayout Spacing="10" 
+                                       Grid.Column="2" 
+                                       Grid.Row="0" 
+                                       HorizontalOptions="EndAndExpand" 
+                                       VerticalOptions="Start">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="{Binding CurrentDate,StringFormat='{0:dddd}'}"/>
+                <Label Text="{Binding CurrentDate,StringFormat='{0:MMM yyyy}'}" />
+            </VerticalStackLayout>
+            <DatePicker Date="{Binding CurrentDate}" 
+                            FontAttributes="Bold" 
+                            FontSize="45" 
+                            Format="dd"/>
+        </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Column="1"
+                               Grid.Row="2"
+                               HorizontalOptions="Center">
+            <Label Text="{Binding LoginName}"
+                               FontSize="20"
+                               />
+            <Label Text="Du har inga avviseringar idag!" Margin="5"/>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
