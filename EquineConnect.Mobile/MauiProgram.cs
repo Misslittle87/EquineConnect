@@ -44,13 +44,20 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<AuthService>();
 
-        builder.Services.AddSingleton<HttpClient>(sp =>
+        builder.Services.AddSingleton(sp =>
         {
-            return new HttpClient
+            var handler = new HttpClientHandler
             {
-                BaseAddress = new Uri("http://10.0.2.2:5041/")
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
+            return new HttpClient(handler)
+            {
+                BaseAddress = new Uri("https://10.0.2.2:7171/")
             };
         });
+
 
 #if DEBUG
         builder.Logging.AddDebug();

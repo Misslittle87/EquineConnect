@@ -23,7 +23,7 @@
                           Title="Aviseringar"
                           Route="MainPage"                          />
         </Tab>
-        <!--<Tab Title="Kalender" Icon="calendar_days_solid.svg">
+        <Tab Title="Kalender" Icon="calendar_days_solid.svg">
             <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}"
                           Title="Kalender"/>
         </Tab>
@@ -32,7 +32,7 @@
                           Title="Person"/>
             <ShellContent ContentTemplate="{DataTemplate views:HorsePage}" 
                           Title="Häst"/>
-        </Tab>-->
+        </Tab>
     </TabBar>
 
     <ShellContent
