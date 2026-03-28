@@ -12,8 +12,8 @@ public partial class AppShell : Shell
         //Routing.RegisterRoute(nameof(PersonDetailPage), typeof(PersonDetailPage));
         //Routing.RegisterRoute(nameof(HorseDetailPage), typeof(HorseDetailPage));
         Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
-        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        //Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+        //Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
 
         LogoutCommand = new Command(async () => await Logout());
         BindingContext = this;

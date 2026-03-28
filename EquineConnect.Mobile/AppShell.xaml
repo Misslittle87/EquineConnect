@@ -8,36 +8,37 @@
     Title="EquineConnect.Mobile"
     FlyoutBehavior="Flyout">
 
-    <ShellContent ContentTemplate="{DataTemplate views:StartPage}"
+    <!--<ShellContent ContentTemplate="{DataTemplate views:StartPage}"
               Route="StartPage" />
 
     <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" 
                   Title="Login"
                   IsVisible="{Binding IsLoginPageVisible}"
-                  Route="LoginPage"/>
+                  Route="LoginPage"/>-->
+
+    <ShellContent
+        Route="login"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
 
 
-    <TabBar>
+    <TabBar Route="app">
         <Tab Title="Aviseringar" Icon="house_solid.svg">
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}"
-                          Title="Aviseringar"
-                          Route="MainPage"                          />
+            <ShellContent Route="main" ContentTemplate="{DataTemplate views:MainPage}"/>
         </Tab>
         <Tab Title="Kalender" Icon="calendar_days_solid.svg">
-            <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}"
-                          Title="Kalender"/>
+            <ShellContent Route="calendar" ContentTemplate="{DataTemplate views:StartPage}"/>
         </Tab>
-        <Tab Title="Stallet" Icon="people.svg">
-            <ShellContent ContentTemplate="{DataTemplate views:PersonPage}"
-                          Title="Person"/>
-            <ShellContent ContentTemplate="{DataTemplate views:HorsePage}" 
-                          Title="Häst"/>
+        <Tab Title="Hästar" Icon="horse_solid.svg">
+            <ShellContent Route="horses" ContentTemplate="{DataTemplate views:HorsePage}"/>
+        </Tab>
+        <Tab Title="Personer" Icon="people.svg">
+            <ShellContent Route="people" ContentTemplate="{DataTemplate views:PersonPage}"/>
         </Tab>
     </TabBar>
 
-    <ShellContent
+    <!--<ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate views:MainPage}"
+        Route="MainPage" />-->
 
 </Shell>

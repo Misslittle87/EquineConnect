@@ -16,7 +16,7 @@ public partial class LoginPage : ContentPage
     private async void OnLoginSuccess()
     {
         Preferences.Set("AuthToken", "some-token-value"); // Spara token
-        await Shell.Current.GoToAsync("//MainPage", true); // Rensa historiken
+        await Shell.Current.GoToAsync("//App", true); // Rensa historiken
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)

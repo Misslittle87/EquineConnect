@@ -1,0 +1,45 @@
+name: Deploy to Google Play Store
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      
+      - name: Install MAUI workload
+        run: dotnet workload restore
+      
+      - name: Restore NuGet packages
+        run: dotnet restore EquineConnect.Mobile/EquineConnect.Mobile.csproj
+      
+      - name: Build Android Release (AAB)
+        run: dotnet publish EquineConnect.Mobile/EquineConnect.Mobile.csproj -f net10.0-android -c Release -p:AndroidPackageFormat=aab
+      
+      - name: Upload to Google Play Store (Internal Testing)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_KEY_JSON }}
+          packageName: 'com.companyname.equineconnect.mobile'
+          releaseFiles: 'EquineConnect.Mobile/bin/Release/net10.0-android/*-Signed.aab'
+          track: internal
+          status: completed
+      
+      - name: Create Release Notes
+        if: success()
+        run: |
+          echo "✅ Successfully deployed to Google Play Store (Internal Testing)"
+          echo "Version: ${{ github.ref_name }}"
+          echo "Package: com.companyname.equineconnect.mobile"

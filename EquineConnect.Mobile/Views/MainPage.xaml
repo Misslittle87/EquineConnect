@@ -4,7 +4,8 @@
              xmlns:viewModel="clr-namespace:EquineConnect.Mobile.ViewModels"
              xmlns:model="clr-namespace:EquineConnect.Mobile.Models"
              x:DataType="viewModel:MainViewModel"
-             x:Class="EquineConnect.Mobile.Views.MainPage">
+             x:Class="EquineConnect.Mobile.Views.MainPage"
+             Title="Aviseringar">
 
     <Grid ColumnDefinitions="*"
           RowSpacing="10"

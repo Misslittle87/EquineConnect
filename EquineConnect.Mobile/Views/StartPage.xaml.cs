@@ -12,11 +12,11 @@ public partial class StartPage : ContentPage
         base.OnAppearing();
         if (Preferences.ContainsKey("AuthToken"))
         {
-            await Shell.Current.GoToAsync("//MainPage");
+            await Shell.Current.GoToAsync("//app");
         }
         else
         {
-            await Shell.Current.GoToAsync("//LoginPage");
+            await Shell.Current.GoToAsync("//login");
         }
     }
 }

@@ -49,7 +49,7 @@ namespace EquineConnect.Mobile.ViewModels
                 // Save token and navigate
                 Preferences.Set("AuthToken", token);
                 IsLoginPageVisible = false;
-                await Shell.Current.GoToAsync("//MainPage");
+                await Shell.Current.GoToAsync("//app");
             }
             else
             {
