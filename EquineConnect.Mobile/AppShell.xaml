@@ -36,6 +36,10 @@
         </Tab>
     </TabBar>
 
+    <ShellContent Title="Inställningar" Icon="settings.svg" Route="settings" ContentTemplate="{DataTemplate views:MainPage}" />
+
+    <ShellContent Title="Logga ut" Route="logout" ContentTemplate="{DataTemplate views:MainPage}" />
+
     <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:MainPage}"

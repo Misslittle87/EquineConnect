@@ -1,4 +1,5 @@
-﻿using EquineConnect.Core.Interfaces;
+﻿using EquineConnect.Core.Constants;
+using EquineConnect.Core.Interfaces;
 using EquineConnect.Core.Models;
 using EquineConnect.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,16 @@ namespace EquineConnect.Core.Services
             var user = new User { UserName = register.UserName, Email = register.Email };
             var result = await _userManager.CreateAsync(user, register.Password);
 
-            return result.Succeeded ? "User created" : null;
+            if (result.Succeeded)
+            {
+                // Assign default role (Boarder) to new users
+                await _userManager.AddToRoleAsync(user, RoleConstants.Boarder);
+
+                // Generate token immediately after registration
+                var expirationTime = DateTime.UtcNow.AddHours(1);
+                return await GenerateTokenString(user, expirationTime);
+            }
+            return null;
         }
 
         public async Task<string?> Login(Login login)
@@ -37,19 +47,29 @@ namespace EquineConnect.Core.Services
 
             var expirationTime = login.RememberMe ? DateTime.UtcNow.AddDays(7) : DateTime.UtcNow.AddHours(1);
 
-            return GenerateTokenString(user, expirationTime);
+            return await GenerateTokenString(user, expirationTime);
         }
 
-        public string GenerateTokenString(User model, DateTime expirationTime)
+        public async Task<string> GenerateTokenString(User model, DateTime expirationTime)
         {
             var key = Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]);
+            var userRoles = await _userManager.GetRolesAsync(model);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, model.Id),
+                new Claim(ClaimTypes.Email, model.Email)
+            };
+
+            // Add role claims
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, model.Id),
-                    new Claim(ClaimTypes.Email, model.Email)
-                }),
+                Subject = new ClaimsIdentity(claims),
                 Expires = expirationTime,
                 Issuer = _config["JwtSettings:Issuer"],
                 Audience = _config["JwtSettings:Audience"],

@@ -9,14 +9,36 @@ namespace EquineConnect.Mobile.Services
     public class AuthService
     {
         private readonly HttpClient _httpClient;
+        private AuthState? _authState;
+
+        public AuthState CurrentUser => _authState ?? new AuthState();
 
         public AuthService(HttpClient httpClient)
         {
             _httpClient = httpClient;
 
             var existing = Preferences.Get("AuthToken", null as string);
-            if (!string.IsNullOrEmpty(existing))
+            if (!string.IsNullOrEmpty(existing) && TokenService.IsTokenValid(existing))
+            {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", existing);
+                LoadAuthState(existing);
+            }
+            else if (!string.IsNullOrEmpty(existing))
+            {
+                // Token är utgången, ta bort den
+                Preferences.Remove("AuthToken");
+            }
+        }
+
+        private void LoadAuthState(string token)
+        {
+            _authState = new AuthState
+            {
+                Token = token,
+                UserId = TokenService.GetUserId(token),
+                Email = TokenService.GetEmail(token),
+                Roles = TokenService.GetRoles(token)
+            };
         }
 
         public async Task<string?> Login(string email, string password)
@@ -52,20 +74,40 @@ namespace EquineConnect.Mobile.Services
                 token = result?.Token;
             }
 
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token) && TokenService.IsTokenValid(token))
             {
                 Preferences.Set("AuthToken", token);
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                LoadAuthState(token);
                 return token;
             }
 
             return null;
         }
 
+        public async Task<string?> Register(string username, string email, string password)
+        {
+            var response = await _httpClient.PostAsJsonAsync(
+                "api/auth/register",
+                new
+                {
+                    userName = username,
+                    email,
+                    password
+                });
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            // Efter registrering, logga in automatiskt
+            return await Login(email, password);
+        }
+
         public void Logout()
         {
             Preferences.Remove("AuthToken");
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            _authState = null;
         }
 
         // Debug helper: log current Authorization header

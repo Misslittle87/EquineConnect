@@ -1,3 +1,4 @@
+using EquineConnect.Api.Services;
 using EquineConnect.Core.Interfaces;
 using EquineConnect.Core.Services;
 using EquineConnect.Data.Context;
@@ -19,12 +20,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DbConnection");
     options.UseSqlServer(connectionString);
 });
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+    {
+        options.Password.RequiredLength = 6;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireDigit = false;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
 
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IHorseService, HorseService>();
+builder.Services.AddScoped<RoleSeeder>();
 //builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -73,6 +83,14 @@ app.UseRouting();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Seed roles on application startup
+using (var scope = app.Services.CreateScope())
+{
+    var roleSeeder = scope.ServiceProvider.GetRequiredService<RoleSeeder>();
+    await roleSeeder.SeedRolesAsync();
+}
+
 app.MapControllers();
 
 app.Run();

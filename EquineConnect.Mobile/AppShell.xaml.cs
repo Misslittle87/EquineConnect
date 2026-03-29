@@ -17,6 +17,18 @@ public partial class AppShell : Shell
 
         LogoutCommand = new Command(async () => await Logout());
         BindingContext = this;
+
+        Routing.RegisterRoute("settings", typeof(Views.MainPage));
+        this.Navigating += OnNavigating;
+    }
+
+    private async void OnNavigating(object sender, ShellNavigatingEventArgs e)
+    {
+        if (e.Target.Location.OriginalString.Contains("logout"))
+        {
+            e.Cancel();
+            await Logout();
+        }
     }
 
     public async Task Logout()
